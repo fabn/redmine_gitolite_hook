@@ -9,6 +9,10 @@ DEFAULT_REDMINE_SERVER=http://your.redmine.server.com
 DEFAULT_REDMINE_PROJECT_ID=$GL_REPO
 DEFAULT_CURL_IGNORE_SECURITY_CFG="false"
 
+# exit with 0 if redmine_hook is not enabled
+REDMINE_HOOK_ENABLED=$(git config --bool hooks.redmine_gitolite.enabled 2>/dev/null)
+[ "$REDMINE_HOOK_ENABLED" != "true" ] && exit 0
+
 KEY=$(git config hooks.redmine_gitolite.key 2>/dev/null)
 if [ -z "$KEY" ]; then
     KEY=$DEFAULT_REDMINE_KEY
